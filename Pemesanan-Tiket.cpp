@@ -3,160 +3,211 @@
 
 using namespace std;
 
-string user, asal, tujuan, password;
-int tanggal;
+string user, asal, tujuan, password, pesawat1;
 char pilih;
+int tanggal1, bulan1, penumpang, harga_tiket, total_harga_tiket;
 
-// Alert Function
-void alert_success() {
-    cout << "Berhasil" << endl;
-}
+void login(void);
+void berangkat(void);
+void maskapaiBerangkat(void);
+void maskapaipulang(void);
+void penumpang1(void);
+void form(void);
 
-void alert_error() {
-    cout << "ERROR\nPilihan Anda tidak tersedia" << endl;
-}
-
-
-// Jadwal Maskapai
-void jadwalMaskapai()
+void alert()
 {
-    int jadwal;
-
-    if (jadwal % 2 == 0)
+    do
     {
-        cout << " ==========================================================" << endl;
-        cout << " ||  MASKAPAI  || JAM BERANGKAT || JAM TIBA ||    HARGA    ||" << endl;
-        cout << " ==========================================================" << endl;
-        cout << " ||   GARUDA   ||      09.00    ||   13.00  || Rp. 200.000 ||" << endl;
-        cout << " ||  AIR ASIA  ||      09.00    ||   13.00  || Rp. 200.000 ||" << endl;
-    };
+        cout << "Anda telah berhasil login, Ingin melanjutkan pemesanan? (y/n) " << endl;
+        cin >> pilih;
+    } while (pilih != 'y' && pilih != 'n');
 }
 
-// Cetak Tiket
-void cetakTiket(int tanggal, string username, string asal, string tujuan, int bulan) {
-    cout << "============== TIKET ANDA ==============" << endl;
-    cout << "Nama\t\t: " << username << endl;
+
+
+
+
+void cetakTiket(string user, string pesawat1, string asal, string tujuan, int penumpang, int harga_tiket) {
+    cout << "================= T I K E T =================" << endl;
+    cout << "Nama\t\t: " << user << endl;
+    cout << "Maskapai\t: " << pesawat1 << endl;
     cout << "Asal\t\t: " << asal << endl;
     cout << "Tujuan\t\t: " << tujuan << endl;
-    cout << "Tanggal\t\t: " << tanggal << endl;
-    if(bulan == 1) {
-        cout << "Bulan\t\t: November" << endl;
-    }else if(bulan == 2) {
-        cout << "Bulan\t\t: Desember" << endl;
-    }
-    if(tanggal % 2 == 0) {
-        cout << "Maskapai\t: Garuda " << endl;
-    }else {
-        cout << "Maskapai\t: Air Asia " << endl;
-    }
+    cout << "penumpang\t: " << penumpang << endl;
+    cout << "Harga Tiket\t: Rp. " << harga_tiket << endl;
 }
 
+void penumpang1(int harga_tiket, string pesawat1, string user, string asal, string tujuan)
+{
+
+    cout << "Masukkan Jumlah Penumpang : ";
+    cin >> penumpang;
+    total_harga_tiket = (harga_tiket * penumpang);
+    cetakTiket(user, pesawat1, asal, tujuan, penumpang, total_harga_tiket);
+}
+
+void maskapaiBerangkat(int tanggal, string user, string asal, string tujuan)
+{
+    if (tanggal1 % 2 == 0)
+    {
+        cout << " ==========================================================" << endl;
+        cout << " || MASKAPAI || JAM BERANGKAT || JAM TIBA ||    HARGA    ||" << endl;
+        cout << " ==========================================================" << endl;
+        cout << " ||  GARUDA  ||     09.00     ||   13.00  || Rp. 200.000 ||" << endl;
+        cout << " || AIR ASIA ||     14.00     ||   17.00  || RP. 800.000 ||" << endl;
+        cout << " ==========================================================" << endl;
+
+        cout << "Pilih Maskapai : ";
+        getline(cin >> ws, pesawat1);
+        if(pesawat1 == "garuda" || pesawat1 == "Garuda" || pesawat1 == "GARUDA") {
+          harga_tiket = 200000;
+          penumpang1(harga_tiket, pesawat1, user, asal, tujuan);
+        }else if(pesawat1 == "Air Asia" || pesawat1 == "air asia" || pesawat1 == "AIR ASIA") {
+          harga_tiket = 800000;
+          penumpang1(harga_tiket, pesawat1, user, asal, tujuan);
+        }else {
+          cout << "Maskapai tidak tersedia" << endl;
+        }
+    }
+    else if (tanggal1 % 2 != 0)
+    {
+        cout << " ==========================================================" << endl;
+        cout << " || MASKAPAI || JAM BERANGKAT || JAM TIBA ||    HARGA    ||" << endl;
+        cout << " ==========================================================" << endl;
+        cout << " ||  GARUDA  ||     09.00     ||   13.00  || Rp. 200.000 ||" << endl;
+        cout << " ==========================================================" << endl;
+
+        cout << "Pilih Maskapai : ";
+        getline(cin >> ws, pesawat1);
+        if(pesawat1 == "garuda" || pesawat1 == "Garuda" || pesawat1 == "GARUDA") {
+          harga_tiket = 20000;
+          penumpang1(harga_tiket, pesawat1, user, asal, tujuan);
+        }
+
+    }
+};
 
 
-// Berangkat Function
-void berangkat(int tanggal, string username, string asal, string tujuan){
-    int bulan;
 
-    if(tanggal >= 1 && tanggal <= 30) {
+void berangkat(int tanggal1, string user, string asal, string tujuan)
+{
+    if (tanggal1 <= 30 && tanggal1 >= 1)
+    {
         cout << "BULAN YANG TERSEDIA : " << endl;
         cout << "1. November" << endl;
         cout << "2. Desember" << endl;
-        cout << "Pilih Bulan : "; cin >> bulan;
-
-        if(bulan == 1 || bulan == 2) {
-            cout << "Bulan Tersedia" << endl;
-            cout << "Apakah Ingin PP? (y/n) : "; cin >> pilih;
-            if(pilih == 'y') {
-                // disini PP
-            }else if(pilih == 'n') {
-                jadwalMaskapai();
-                cetakTiket(tanggal, username, asal, tujuan, bulan);
-            }
-        }else {
-            cout << "Bulan tidak tersedia" << endl;
+        cout << "Pilih Bulan : " << endl;
+        cin >> bulan1;
+        if (bulan1 == 1 || bulan1 == 2)
+        {
+            maskapaiBerangkat(tanggal1, user, asal, tujuan);
         }
-        
-    }else if(tanggal == 31) {
+        else
+        {
+            cout << "BULAN TIDAK TERSEDIA!" << endl;
+            berangkat(tanggal1, user, asal, tujuan);
+        }
+    }
+    else if (tanggal1 == 31)
+    {
         cout << "BULAN YANG TERSEDIA : " << endl;
+        cout << "Pilih Bulan:" << endl;
         cout << "1. Desember" << endl;
-        cout << "Pilih bulan : "; cin >> bulan;
-        if(bulan != 1) {
-            cout << "Bulan tidak tersedia" << endl;
-        }else {
-            cout << "Bulan Tersedia" << endl;
-            cout << "Apakah Ingin PP? (y/n) : "; cin >> pilih;
-            if(pilih == 'y') {
-                // disini pp
-            }else if(pilih == 'n') {
-                jadwalMaskapai();
-                cetakTiket(tanggal, username, asal, tujuan, bulan);
-            }
+        cin >> bulan1;
+        if (bulan1 == 1)
+        {
+            maskapaiBerangkat(tanggal1, user, asal, tujuan);
         }
+        else
+        {
+            cout << "BULAN TIDAK TERSEDIA!" << endl;
+            berangkat(tanggal1, user, asal, tujuan);
+        };
+    }
+    else
+    {
+        cout << "Tanggal tidak tersedia" << endl;
     }
 }
 
 
-// Form Function
-void form(string username){
-    if (pilih == 'y'){
+void maskapaiPulang()
+{
+    if (tanggal1 % 2 == 0)
+    {
+        cout << " ==========================================================" << endl;
+        cout << " || MASKAPAI || JAM BERANGKAT || JAM TIBA ||    HARGA    ||" << endl;
+        cout << " ==========================================================" << endl;
+        cout << " || CITILINK ||     13.00     ||   17.00  || Rp. 200.000 ||" << endl;
+        cout << " || LION AIR ||     20.00     ||   00.00  || RP. 800.000 ||" << endl;
+        cout << " ==========================================================" << endl;
+
+        cout << "Pilih Maskapai : ";
+        cin >> pesawat1;
+        
+        // penumpang1();
+    }
+    else if (tanggal1 % 2 != 0)
+    {
+        cout << " ==========================================================" << endl;
+        cout << " || MASKAPAI || JAM BERANGKAT || JAM TIBA ||    HARGA    ||" << endl;
+        cout << " ==========================================================" << endl;
+        cout << " || CITILINK ||     07.00     ||   11.00  || Rp. 200.000 ||" << endl;
+        cout << " ==========================================================" << endl;
+
+        cout << "Pilih Maskapai : ";
+        cin >> pesawat1;
+        // penumpang1();
+    }
+}
+
+
+
+void form(char pilih, string user)
+{
+    if (pilih == 'y' || pilih == 'Y')
+    {
         cout << "Silahkan isi form dibawah ini!" << endl;
-        cout << "Asal : "; getline(cin >> ws, asal);
-        cout << "Tujuan : "; getline(cin >> ws, tujuan);
-        cout << "Tanggal Berangkat : ";cin >>  tanggal;
-        berangkat(tanggal, username, asal, tujuan);
-    }else if (pilih == 'n'){
+        cout << "Asal : ";
+        getline(cin >> ws, asal);
+        cout << "Tujuan :";
+        getline(cin >> ws, tujuan);
+        cout << "Tanggal Berangkat : " << endl;
+        cin >> tanggal1;
+        berangkat(tanggal1, user, asal, tujuan);
+    }
+    else if (pilih == 'n' || pilih == 'N')
+    {
         cout << "TERIMAKASIH SUDAH MAMPIR!" << endl;
-    }else{
+    }
+    else
+    {
         cout << "INPUT ANDA SALAH" << endl;
     }
+    alert();
 }
 
-
-
-// Login Function
 void login()
 {
-    string username, password;
-    cout << "===============================================" << endl;
-    cout << "       APLIKASI PEMESANAN TIKET PESAWAT        " << endl;
-    cout << "===============================================" << endl;
-    cout << "================== L O G I N ==================" << endl;
+
+    cout << "APLIKASI PEMESANAN TIKET PESAWAT" << endl
+         << endl;
     cout << "Masukkan Username : ";
-    getline(cin >> ws, username);
+    getline(cin >> ws, user);
     cout << "Masukkan Password : ";
     getline(cin >> ws, password);
-    cout << "Halo " << username << " Selamat datang!" << endl;
-    cout << "Lanjutkan ke pemesanan tiket? (y/n)"; cin >> pilih;
 
-    if(pilih == 'y' || pilih == 'Y') {
-        form(username);
-    }else if(pilih == 'n' || pilih == 'N') {
-        return;
-    }else {
-        alert_error();
-    }
+    cout << "Halo " << user << " Selamat Datang !" << endl;
+    form(pilih = 'y',user);
+    alert();
 }
-
-
-
-
-
-// void alert()
-// {
-//     cout << "Anda telah berhasil login, Ingin melanjutkan pemesanan? (y/n) " << endl;
-//     cin >> pilih;
-//     do
-//     {
-//         cout << "Anda telah berhasil login, Ingin melanjutkan pemesanan? (y/n) " << endl;
-//     } while (pilih != 'y' && pilih != 'n');
-// }
-
-
 int main()
 {
     login();
-    // alert();
-    // form();
+    form(pilih, user);
+    berangkat(tanggal1, user, asal, tujuan);
+    maskapaiBerangkat(tanggal1, user, asal, tujuan);
+    penumpang1(harga_tiket, pesawat1, user, asal, tujuan);
 
     return 0;
 }
